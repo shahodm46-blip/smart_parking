@@ -1,12 +1,13 @@
 FROM php:7.4-apache
 
-# تعطيل موديول الـ mpm_event وتفعيل mpm_prefork عشان ميتعارضوش
-RUN a2dismod mpm_event && a2enmod mpm_prefork
+# دي أهم خطوة: بنمسح ملفات الـ mpm القديمة اللي بتعمل تعارض
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.conf /etc/apache2/mods-enabled/mpm_event.load
+RUN a2enmod mpm_prefork
 
-# نسخ ملفات الموقع للمسار الصحيح
+# بننسخ ملفاتك
 COPY . /var/www/html/
 
-# ضبط الصلاحيات عشان Apache يقدر يقرأ الملفات
+# بنظبط الصلاحيات
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
