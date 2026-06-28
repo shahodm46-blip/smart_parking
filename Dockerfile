@@ -1,5 +1,7 @@
 FROM php:8.1-apache
 
+ARG CACHEBUST=1
+
 # تثبيت mysqli
 RUN docker-php-ext-install mysqli
 
