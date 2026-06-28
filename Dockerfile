@@ -14,4 +14,4 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 8080
-CMD ["apache2-foreground"]
+CMD apache2ctl -M; apache2-foreground
