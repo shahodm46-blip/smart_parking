@@ -1,6 +1,7 @@
 FROM php:8.1-apache
 
 ARG CACHEBUST=1
+RUN echo "Cache bust: $CACHEBUST"
 
 # تثبيت mysqli
 RUN docker-php-ext-install mysqli
