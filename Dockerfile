@@ -1,10 +1,7 @@
 FROM php:8.1-apache
 
-# تثبيت الحزم اللازمة وتعطيل الـ MPM الافتراضي
+# تثبيت الحزم اللازمة
 RUN apt-get update && apt-get install -y apache2
-
-RUN a2dismod mpm_event mpm_worker || true
-RUN a2enmod mpm_prefork
 
 # تثبيت mysqli
 RUN docker-php-ext-install mysqli
