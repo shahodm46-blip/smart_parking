@@ -1,14 +1,10 @@
-FROM php:7.4-apache
+FROM php:7.4-fpm-alpine
 
-# تعطيل كل إعدادات الـ mpm المسبقة عشان نضمن مفيش تعارض
-RUN a2dismod mpm_event mpm_worker mpm_prefork && \
-    apt-get update && apt-get install -y apache2 && \
-    a2enmod mpm_prefork
+# تثبيت خادم ويب خفيف جداً ومستقر
+RUN apk add --no-cache apache2
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/httpd.conf
 
-# نسخ ملفات الموقع
-COPY . /var/www/html/
+COPY . /var/www/localhost/htdocs/
 
-# ضبط الصلاحيات
-RUN chown -R www-data:www-data /var/www/html
-
-EXPOSE 80
+EXPOSE 8080
+CMD ["sh", "-c", "httpd && php-fpm"]
